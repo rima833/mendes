@@ -85,7 +85,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-8 w-8 text-blue-600" />
+              <img src="/cleaning logo.png" alt="Menders Cleaning Services" className="h-8 w-8" />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Menders</h1>
                 <p className="text-sm text-gray-600">Cleaning Services</p>
@@ -488,7 +488,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Sparkles className="h-8 w-8 text-blue-400" />
+              <img src="/cleaning logo.png" alt="Menders Cleaning Services" className="h-8 w-8" />
               <div>
                 <h3 className="text-2xl font-bold">Menders Cleaning Services</h3>
                 <p className="text-gray-400">We fix your space—so you can focus on what matters.</p>
@@ -508,7 +508,7 @@ function App() {
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <Sparkles className="h-8 w-8 text-green-600" />
+                  <img src="/cleaning logo.png" alt="Menders" className="h-8 w-8" />
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900">Book Your Free Mini Clean</h2>
                     <p className="text-gray-600">1-2 rooms or 45 minutes • New clients only</p>
