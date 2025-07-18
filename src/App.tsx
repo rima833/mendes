@@ -1069,9 +1069,9 @@ function App() {
                       <option value="3-4-rooms">3-4 Rooms</option>
                       <option value="5-6-rooms">5-6 Rooms</option>
                       <option value="7-plus-rooms">7+ Rooms</option>
-                      <option value="small-office">Small Office (< 500 sqft)</option>
+                      <option value="small-office">Small Office (&lt; 500 sqft)</option>
                       <option value="medium-office">Medium Office (500-2000 sqft)</option>
-                      <option value="large-office">Large Office (> 2000 sqft)</option>
+                      <option value="large-office">Large Office (&gt; 2000 sqft)</option>
                       <option value="event-venue">Event Venue</option>
                     </select>
                   </div>
