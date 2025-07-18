@@ -14,8 +14,35 @@ interface BookingFormData {
   message: string;
 }
 
+interface QuoteFormData {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  address: string;
+  serviceType: string;
+  propertySize: string;
+  frequency: string;
+  urgency: string;
+  message: string;
+}
+
+interface PartnerFormData {
+  companyName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  city: string;
+  partnerType: string;
+  businessSize: string;
+  currentVolume: string;
+  message: string;
+}
+
 function App() {
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [showPartnerModal, setShowPartnerModal] = useState(false);
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
     email: '',
@@ -28,12 +55,53 @@ function App() {
     preferredTime: '',
     message: ''
   });
+  const [quoteFormData, setQuoteFormData] = useState<QuoteFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    city: '',
+    address: '',
+    serviceType: '',
+    propertySize: '',
+    frequency: '',
+    urgency: '',
+    message: ''
+  });
+  const [partnerFormData, setPartnerFormData] = useState<PartnerFormData>({
+    companyName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    city: '',
+    partnerType: '',
+    businessSize: '',
+    currentVolume: '',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [quoteSubmitSuccess, setQuoteSubmitSuccess] = useState(false);
+  const [partnerSubmitSuccess, setPartnerSubmitSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleQuoteInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setQuoteFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePartnerInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setPartnerFormData(prev => ({
       ...prev,
       [name]: value
     }));
@@ -68,6 +136,63 @@ function App() {
     }, 3000);
   };
 
+  const handleQuoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsSubmitting(false);
+    setQuoteSubmitSuccess(true);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setQuoteSubmitSuccess(false);
+      setShowQuoteModal(false);
+      setQuoteFormData({
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        address: '',
+        serviceType: '',
+        propertySize: '',
+        frequency: '',
+        urgency: '',
+        message: ''
+      });
+    }, 3000);
+  };
+
+  const handlePartnerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsSubmitting(false);
+    setPartnerSubmitSuccess(true);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setPartnerSubmitSuccess(false);
+      setShowPartnerModal(false);
+      setPartnerFormData({
+        companyName: '',
+        contactName: '',
+        email: '',
+        phone: '',
+        city: '',
+        partnerType: '',
+        businessSize: '',
+        currentVolume: '',
+        message: ''
+      });
+    }, 3000);
+  };
+
   const openBookingModal = () => {
     setShowBookingModal(true);
     document.body.style.overflow = 'hidden';
@@ -75,6 +200,26 @@ function App() {
 
   const closeBookingModal = () => {
     setShowBookingModal(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  const openQuoteModal = () => {
+    setShowQuoteModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeQuoteModal = () => {
+    setShowQuoteModal(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  const openPartnerModal = () => {
+    setShowPartnerModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closePartnerModal = () => {
+    setShowPartnerModal(false);
     document.body.style.overflow = 'unset';
   };
 
@@ -125,9 +270,12 @@ function App() {
               >
                 Get Free Mini Clean
               </button>
-              <a href="#contact" className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
+              <button 
+                onClick={openQuoteModal}
+                className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors"
+              >
                 Get Quote
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -248,9 +396,12 @@ function App() {
           
           <div className="text-center mt-12">
             <p className="text-lg text-gray-600 mb-4">Need something custom? Let's talk.</p>
-            <a href="#contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            <button 
+              onClick={openQuoteModal}
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
               Get Custom Quote
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -410,9 +561,12 @@ function App() {
           </div>
           
           <div className="text-center">
-            <a href="#contact" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+            <button 
+              onClick={openPartnerModal}
+              className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
+            >
               Become a Partner
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -473,9 +627,12 @@ function App() {
                   >
                     Book Free Mini Clean
                   </button>
-                  <a href="mailto:hello@menderscleaning.ng" className="block w-full border-2 border-blue-400 text-blue-400 px-6 py-3 rounded-lg text-center font-semibold hover:bg-blue-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={openQuoteModal}
+                    className="block w-full border-2 border-blue-400 text-blue-400 px-6 py-3 rounded-lg text-center font-semibold hover:bg-blue-400 hover:text-white transition-colors"
+                  >
                     Get Quote
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -746,6 +903,490 @@ function App() {
                     className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Submitting...' : 'Book Free Clean'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Quote Modal */}
+      {showQuoteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <img src="/cleaning logo.png" alt="Menders" className="h-8 w-8" />
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">Get Your Custom Quote</h2>
+                    <p className="text-gray-600">Tell us about your cleaning needs</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={closeQuoteModal}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+
+            {quoteSubmitSuccess ? (
+              <div className="p-8 text-center">
+                <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Quote Request Submitted!</h3>
+                <p className="text-gray-600 mb-4">
+                  Thank you for your interest in Menders! We'll review your requirements and send you a detailed quote within 24 hours.
+                </p>
+                <p className="text-sm text-gray-500">
+                  Check your email for confirmation and follow-up details.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleQuoteSubmit} className="p-6 space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <User className="h-4 w-4 inline mr-1" />
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={quoteFormData.name}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Mail className="h-4 w-4 inline mr-1" />
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={quoteFormData.email}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Phone className="h-4 w-4 inline mr-1" />
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={quoteFormData.phone}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="080X XXX XXXX"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <MapPin className="h-4 w-4 inline mr-1" />
+                      City *
+                    </label>
+                    <select
+                      name="city"
+                      value={quoteFormData.city}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select your city</option>
+                      <option value="abuja">Abuja</option>
+                      <option value="lagos">Lagos</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Home className="h-4 w-4 inline mr-1" />
+                    Property Address *
+                  </label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={quoteFormData.address}
+                    onChange={handleQuoteInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter your full address"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Building className="h-4 w-4 inline mr-1" />
+                      Service Type *
+                    </label>
+                    <select
+                      name="serviceType"
+                      value={quoteFormData.serviceType}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select service type</option>
+                      <option value="home-cleaning">Home Cleaning</option>
+                      <option value="office-cleaning">Office Cleaning</option>
+                      <option value="event-cleaning">Event Cleaning</option>
+                      <option value="post-construction">Post-Construction</option>
+                      <option value="deep-cleaning">Deep Cleaning</option>
+                      <option value="move-in-out">Move-in/Move-out</option>
+                      <option value="custom">Custom Service</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Property Size *
+                    </label>
+                    <select
+                      name="propertySize"
+                      value={quoteFormData.propertySize}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select property size</option>
+                      <option value="1-2-rooms">1-2 Rooms</option>
+                      <option value="3-4-rooms">3-4 Rooms</option>
+                      <option value="5-6-rooms">5-6 Rooms</option>
+                      <option value="7-plus-rooms">7+ Rooms</option>
+                      <option value="small-office">Small Office (< 500 sqft)</option>
+                      <option value="medium-office">Medium Office (500-2000 sqft)</option>
+                      <option value="large-office">Large Office (> 2000 sqft)</option>
+                      <option value="event-venue">Event Venue</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Clock className="h-4 w-4 inline mr-1" />
+                      Service Frequency *
+                    </label>
+                    <select
+                      name="frequency"
+                      value={quoteFormData.frequency}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select frequency</option>
+                      <option value="one-time">One-time Service</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="bi-weekly">Bi-weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">Quarterly</option>
+                      <option value="as-needed">As Needed</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Urgency Level *
+                    </label>
+                    <select
+                      name="urgency"
+                      value={quoteFormData.urgency}
+                      onChange={handleQuoteInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select urgency</option>
+                      <option value="asap">ASAP (Within 24 hours)</option>
+                      <option value="this-week">This Week</option>
+                      <option value="next-week">Next Week</option>
+                      <option value="flexible">Flexible Timeline</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <MessageSquare className="h-4 w-4 inline mr-1" />
+                    Additional Details
+                  </label>
+                  <textarea
+                    name="message"
+                    value={quoteFormData.message}
+                    onChange={handleQuoteInputChange}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Please describe any specific requirements, areas of focus, special instructions, or questions you have..."
+                  />
+                </div>
+
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">What happens next?</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-600 mr-2" />We'll review your requirements within 24 hours</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-600 mr-2" />Receive a detailed quote via email</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-600 mr-2" />Schedule a consultation if needed</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-600 mr-2" />Book your service at your convenience</li>
+                  </ul>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    type="button"
+                    onClick={closeQuoteModal}
+                    className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Get Quote'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Partner Modal */}
+      {showPartnerModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <img src="/cleaning logo.png" alt="Menders" className="h-8 w-8" />
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">Partner With Menders</h2>
+                    <p className="text-gray-600">Join our network of business partners</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={closePartnerModal}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+
+            {partnerSubmitSuccess ? (
+              <div className="p-8 text-center">
+                <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Partnership Application Submitted!</h3>
+                <p className="text-gray-600 mb-4">
+                  Thank you for your interest in partnering with Menders! Our business development team will review your application and contact you within 48 hours.
+                </p>
+                <p className="text-sm text-gray-500">
+                  We're excited about the possibility of working together!
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handlePartnerSubmit} className="p-6 space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Building className="h-4 w-4 inline mr-1" />
+                      Company Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="companyName"
+                      value={partnerFormData.companyName}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="Enter your company name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <User className="h-4 w-4 inline mr-1" />
+                      Contact Person *
+                    </label>
+                    <input
+                      type="text"
+                      name="contactName"
+                      value={partnerFormData.contactName}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="Your full name"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Mail className="h-4 w-4 inline mr-1" />
+                      Business Email *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={partnerFormData.email}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="business@company.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <Phone className="h-4 w-4 inline mr-1" />
+                      Business Phone *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={partnerFormData.phone}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="080X XXX XXXX"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <MapPin className="h-4 w-4 inline mr-1" />
+                      Primary City *
+                    </label>
+                    <select
+                      name="city"
+                      value={partnerFormData.city}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="">Select primary city</option>
+                      <option value="abuja">Abuja</option>
+                      <option value="lagos">Lagos</option>
+                      <option value="both">Both Cities</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Partner Type *
+                    </label>
+                    <select
+                      name="partnerType"
+                      value={partnerFormData.partnerType}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="">Select partner type</option>
+                      <option value="property-manager">Property Manager</option>
+                      <option value="event-planner">Event Planner</option>
+                      <option value="real-estate">Real Estate Agent</option>
+                      <option value="construction">Construction Company</option>
+                      <option value="hospitality">Hospitality Business</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Business Size *
+                    </label>
+                    <select
+                      name="businessSize"
+                      value={partnerFormData.businessSize}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="">Select business size</option>
+                      <option value="startup">Startup (1-10 employees)</option>
+                      <option value="small">Small (11-50 employees)</option>
+                      <option value="medium">Medium (51-200 employees)</option>
+                      <option value="large">Large (200+ employees)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Expected Monthly Volume *
+                    </label>
+                    <select
+                      name="currentVolume"
+                      value={partnerFormData.currentVolume}
+                      onChange={handlePartnerInputChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="">Select expected volume</option>
+                      <option value="1-5">1-5 referrals/bookings</option>
+                      <option value="6-15">6-15 referrals/bookings</option>
+                      <option value="16-30">16-30 referrals/bookings</option>
+                      <option value="30-plus">30+ referrals/bookings</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <MessageSquare className="h-4 w-4 inline mr-1" />
+                    Partnership Details
+                  </label>
+                  <textarea
+                    name="message"
+                    value={partnerFormData.message}
+                    onChange={handlePartnerInputChange}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="Tell us about your business, how you envision our partnership, and any specific requirements or questions you have..."
+                  />
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Partnership Benefits:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-purple-600 mr-2" />Exclusive partner rates and bulk discounts</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-purple-600 mr-2" />Priority scheduling for your clients</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-purple-600 mr-2" />Dedicated account manager</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-purple-600 mr-2" />Commission structure for referrals</li>
+                    <li className="flex items-center"><CheckCircle className="h-4 w-4 text-purple-600 mr-2" />Co-marketing opportunities</li>
+                  </ul>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    type="button"
+                    onClick={closePartnerModal}
+                    className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Apply for Partnership'}
                   </button>
                 </div>
               </form>
